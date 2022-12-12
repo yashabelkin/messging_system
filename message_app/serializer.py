@@ -7,8 +7,3 @@ class MessageSerializer(ModelSerializer):
         model = Message
         fields = '__all__'
 
-
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = 'username', 'password'

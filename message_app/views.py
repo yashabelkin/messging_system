@@ -44,7 +44,7 @@ def messages_handler(request):
         return Response(request.data, status=status.HTTP_201_CREATED)
 
     
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def message_handler(request, pk):
     user = request.user
