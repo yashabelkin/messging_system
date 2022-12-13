@@ -1,6 +1,8 @@
 
 all the requests require authentication - token
 
+provide the token in the authorization at bearer type.
+
 urls:
 
 admin/ - admin page
