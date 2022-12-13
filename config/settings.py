@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@%p9qg3+)c-7!*k1u$y*3unp#!ce#whxu3si5(fcxj=qcfag8$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
 
-ALLOWED_HOSTS = ['https://ybmessageapp.herokuapp.com/','127.0.0.1']
+ALLOWED_HOSTS = ['ybmessageapp.herokuapp.com','127.0.0.1']
 
 
 # Application definition
