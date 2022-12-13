@@ -23,6 +23,16 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+@api_view(['GET'])
+def api_overview(request):
+    api_urls = {
+        'admin/': 'admin', 
+        'messages/':'GET' '/' 'POST',
+        'messages/<int:pk>/':'GET' '/' 'DELETE',
+        'messages/unread/' : 'GET',
+        'login/' : 'POST',
+    }
+    return Response(api_urls, status= status.HTTP_200_OK)
 
 
 @api_view(['GET','POST'])
@@ -32,7 +42,7 @@ def messages_handler(request):
     if request.method == 'GET':
         messages = Message.objects.filter(Q(sender=user) | Q(receiver=user))
         serializer = MessageSerializer(messages, many = True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     elif request.method == 'POST':
@@ -50,7 +60,7 @@ def message_handler(request, pk):
     user = request.user
     try:
         message = Message.objects.get(id = pk)
-        if message.receiver != user:
+        if (message.receiver != user) and (message.sender != user):
             return Response ('Could not fonud this message in your messages', status=status.HTTP_403_FORBIDDEN)
 
     except Message.DoesNotExist:
@@ -60,7 +70,7 @@ def message_handler(request, pk):
         message.is_read = True
         message.save()
         serializer = MessageSerializer(message)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
         message.delete()    
@@ -73,6 +83,6 @@ def message_handler(request, pk):
 def unread_messages(request):
     user = request.user
     if request.method == 'GET':
-        messages = Message.objects.filter(Q(receiver=user) | Q(is_read=False))
+        messages = Message.objects.filter(receiver=user, is_read=False)
         serializer = MessageSerializer(messages, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
